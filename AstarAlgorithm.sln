@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.438
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstarAlgorithm", "AstarAlgorithm\AstarAlgorithm.csproj", "{D00EDFC0-E9EA-4BC8-B44D-4748598DA917}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D00EDFC0-E9EA-4BC8-B44D-4748598DA917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D00EDFC0-E9EA-4BC8-B44D-4748598DA917}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D00EDFC0-E9EA-4BC8-B44D-4748598DA917}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D00EDFC0-E9EA-4BC8-B44D-4748598DA917}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E7054B9B-7E22-414D-9B88-7497577A4D4D}
+	EndGlobalSection
+EndGlobal
