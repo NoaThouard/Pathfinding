@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,15 +22,26 @@ namespace AstarAlgorithm
         //GenerateMaze() called when there isn't a existing grid
         public void GenerateGrid()
         {
+            Random random = new Random();
+            int randomNum;
+
             for (int y = 0; y < grid.GetLength(1); y++)
             {
                 for (int x = 0; x < grid.GetLength(0); x++)
                 {
-                    GridSquare temp = new GridSquare(ConsoleColor.Yellow, "Walkable");
-                    grid[x, y] = temp;
-                    PrintSquare(temp);
+                    randomNum = random.Next(1, 100);
+                    if (randomNum > 75)//25 percent chance to spawn a obstacle
+                    {
+                        GridSquare temp = new GridSquare(ConsoleColor.Black, "Obstacle");
+                        grid[x, y] = temp;
+                    }
+                    else
+                    {
+                        GridSquare temp = new GridSquare(ConsoleColor.Yellow, "Walkable");
+                        grid[x, y] = temp;
+                    }
+
                 }
-                Console.Write(Environment.NewLine);
             }
         }
         //GenerateMaze(grid) overload used to update a grid after the user has inputed the start and end point
@@ -91,12 +103,14 @@ namespace AstarAlgorithm
         {
             int posLeft = 0;
             int posTop = 0;
+            bool startSet = false, endSet = false;
             while (true)
             {
                 Console.SetCursorPosition(posLeft, posTop);
                 if (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo key = Console.ReadKey();
+                    GenerateGrid(grid);//reloads the grid every time there is a change - implemted because in the console moving the cursor will erase colours
                     switch (key.Key)
                     {
                         case ConsoleKey.LeftArrow:
@@ -137,21 +151,32 @@ namespace AstarAlgorithm
                             }
                         case ConsoleKey.S:
                             {
-                                grid[posTop, posLeft].type = "Start";
-                                grid[posTop, posLeft].colour = ConsoleColor.Blue;
+                                if (grid[posTop, posLeft].type == "Walkable" && startSet == false)
+                                {
+                                    grid[posTop, posLeft].type = "Start";
+                                    grid[posTop, posLeft].colour = ConsoleColor.Blue;
+                                    startSet = true;
+                                }
                                 break;
                             }
                         case ConsoleKey.E:
                             {
-                                grid[posTop, posLeft].type = "Goal";
-                                grid[posTop, posLeft].colour = ConsoleColor.DarkRed;
+                                if (grid[posTop, posLeft].type == "Walkable" && endSet == false)
+                                {
+                                    grid[posTop, posLeft].type = "Goal";
+                                    grid[posTop, posLeft].colour = ConsoleColor.DarkRed;
+                                    endSet = true;
+                                }
                                 break;
                             }
                         case ConsoleKey.Enter:
                             {
-                                GenerateGrid(grid);
-                                GenerateGrid(nodes, grid);
-                                return;
+                                if (startSet == true && endSet == true)
+                                {
+                                    GenerateGrid(nodes, grid);
+                                    return;
+                                }
+                                break;
                             }
                     }
                 }

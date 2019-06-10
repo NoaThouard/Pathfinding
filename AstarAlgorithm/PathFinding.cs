@@ -141,8 +141,8 @@ namespace AstarAlgorithm
         {
             return nodes[posX, posY];
         }
-        //Non-Diagonal cost calculation
-        public int ManhattanDistance(Node current, Node target)
+        //Modified Non-Diagonal cost calculation
+        public int ModifiedManhattanDistance(Node current, Node target)
         {
             int distanceX = Math.Abs(current.posX - current.posX);
             int distanceY = Math.Abs(current.posY - current.posY);
@@ -155,6 +155,13 @@ namespace AstarAlgorithm
             {
                 return (14 * distanceX + 10 * (distanceY - distanceX));
             }
+        }
+        //Modified Non-Diagonal cost calculation
+        public int ManhattanDistance(Node current, Node target)
+        {
+            int distanceX = Math.Abs(current.posX - target.posX);
+            int distanceY = Math.Abs(current.posY - target.posY);
+            return 10 * (distanceX + distanceY);
         }
         //Diagonal cost calculation
         public int DiagonalManhattanDistance(Node current, Node target)
