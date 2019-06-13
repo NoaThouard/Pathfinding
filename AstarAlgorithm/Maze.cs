@@ -11,12 +11,12 @@ namespace AstarAlgorithm
     {
         //Using node & grid class create arrays[]
         public Node[,] nodes;
-        GridSquare[,] grid; 
+        public GridSquare[,] grid; 
         //called to set the size of the grid
-        public void SetSize(int size)
+        public void SetSize(int row, int col)
         {
-            nodes = new Node[size, size];
-            grid = new GridSquare[size, size];
+            nodes = new Node[row, col];
+            grid = new GridSquare[row, col];
 
         }
         //GenerateMaze() called when there isn't a existing grid
@@ -25,20 +25,23 @@ namespace AstarAlgorithm
             Random random = new Random();
             int randomNum;
 
-            for (int y = 0; y < grid.GetLength(1); y++)
+            for (int i = 0; i < grid.GetLength(0); i++)
             {
-                for (int x = 0; x < grid.GetLength(0); x++)
+                for (int j = 0; j < grid.GetLength(1); j++)
                 {
+                    //Line used to print a boarder around the maze
+                    if (i == 0 || i == grid.GetLength(0) -1 || j == 0 || j == grid.GetLength(1) - 1) { GridSquare temp = new GridSquare(ConsoleColor.Red, "Obstacle"); grid[i, j] = temp; continue; }
+
                     randomNum = random.Next(1, 100);
                     if (randomNum > 75)//25 percent chance to spawn a obstacle
                     {
-                        GridSquare temp = new GridSquare(ConsoleColor.Black, "Obstacle");
-                        grid[x, y] = temp;
+                        GridSquare temp = new GridSquare(ConsoleColor.Red, "Obstacle");
+                        grid[i, j] = temp;
                     }
                     else
                     {
                         GridSquare temp = new GridSquare(ConsoleColor.Yellow, "Walkable");
-                        grid[x, y] = temp;
+                        grid[i, j] = temp;
                     }
 
                 }
@@ -68,24 +71,48 @@ namespace AstarAlgorithm
         {
             Console.ResetColor();
             Console.Clear();
-            for (int y = 0; y < grid.GetLength(1); y++)
+            for (int i = 0; i < grid.GetLength(0); i++)
             {
-                for (int x = 0; x < grid.GetLength(0); x++)
+                for (int j = 0; j < grid.GetLength(1); j++)
                 {
-                    GridSquare tempGrid = grid[x, y];
-                    Node tempNode = new Node(tempGrid.type, x, y);
-                    nodeGrid[x, y] = tempNode;
+                    GridSquare tempGrid = grid[i, j];
+                    Node tempNode = new Node(tempGrid.type, i, j);
+                    nodeGrid[i, j] = tempNode;
                 }
+            }
+        }
+        //GenerateMaze using node list created in OnePass class
+        public void GenerateGrid(GridSquare[,] grid, List<Node> onePass)
+        {
+            Console.ResetColor();
+            Console.Clear();
+            int gCount = 0;
+            foreach (GridSquare g in grid)
+            {
+                if (gCount == grid.GetLength(1))
+                {
+                    Console.Write(Environment.NewLine);
+                    gCount = 0;
+                }
+
+                PrintSquare(g);
+
+                gCount++;
             }
         }
         public void VisualisePath(List<Node> path)
         {
+            if (path == null)
+            {
+                Console.WriteLine("No path found between start node and goal node");
+                return;
+            }
             foreach (Node n in path)
             {
-                GridSquare temp = grid[n.posX, n.posY];
+                GridSquare temp = grid[n.posI, n.posJ];
                 temp.type = "path";
                 temp.colour = ConsoleColor.DarkBlue;
-                grid[n.posX, n.posY] = temp;
+                grid[n.posI, n.posJ] = temp;
             }
             GenerateGrid(grid);
 
@@ -124,7 +151,7 @@ namespace AstarAlgorithm
                             }
                         case ConsoleKey.RightArrow:
                             {
-                                if (posLeft < grid.GetLength(0) - 1)
+                                if (posLeft < grid.GetLength(1) - 1)
                                 {
                                     posLeft++;
                                     Console.SetCursorPosition(posLeft, posTop);
@@ -133,7 +160,7 @@ namespace AstarAlgorithm
                             }
                         case ConsoleKey.DownArrow:
                             {
-                                if (posTop < grid.GetLength(1) - 1)
+                                if (posTop < grid.GetLength(0) - 1)
                                 {
                                     posTop++;
                                     Console.SetCursorPosition(posLeft, posTop);

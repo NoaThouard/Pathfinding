@@ -6,21 +6,22 @@ using System.Threading.Tasks;
 
 namespace AstarAlgorithm
 {
-    class PathFinding
+    class OnePassPathFinding
     {
-        //Grid
-        private Node[,] nodes;
-        //Constructor for node grid
-        public PathFinding(Node[,] _nodes)
+        //OnePass node graph
+        private List<Node> onePassNodes;
+        //Constructor for one pass node
+        public OnePassPathFinding(List<Node> _onePassNodes)
         {
-            nodes = _nodes;
+            onePassNodes = _onePassNodes;
         }
+
         //open set
         private List<Node> openSet;
         //close set - Hash set is a collection that doesnt store duplicates
         private HashSet<Node> closeSet;
         private Node startingNode, goalNode;
-        
+
         //Calculates Path using a grid of nodes
         public void CalculatePath()
         {
@@ -57,20 +58,21 @@ namespace AstarAlgorithm
                     CreatePath(startingNode, goalNode);
                     return;
                 }
-                
+
                 //Check all neighbours of the current node
-                foreach (Node neighbour in GetNeighbours(currentNode))
+                foreach (Node neighbour in currentNode.neighbours)
                 {
+                    if (neighbour == null) { continue; }
                     if (neighbour.nodeType == "Obstacle" || closeSet.Contains(neighbour))
                     {
                         continue;
                     }
                     //calculate costs
-                    int movementCost = currentNode.gCost + ManhattanDistance(currentNode, neighbour);
+                    int movementCost = currentNode.gCost + ModifiedManhattanDistance(currentNode, neighbour);
                     if (movementCost < neighbour.gCost || !openSet.Contains(neighbour))
                     {
                         neighbour.gCost = movementCost;
-                        neighbour.hCost = ManhattanDistance(neighbour, goalNode);
+                        neighbour.hCost = ModifiedManhattanDistance(neighbour, goalNode);
                         neighbour.parent = currentNode;
                         openSet.Add(neighbour);
                     }
@@ -78,50 +80,9 @@ namespace AstarAlgorithm
             }
 
         }
-        public List<Node> GetNeighbours(Node n)
-        {
-            List<Node> neighbours = new List<Node>();
-            //Checks x - 1 & x + 1 thus top and bottom, adds neighbour if they're within bounds
-            for (int x = -1; x <= 1; x++)
-            {
-                if (x == 0)
-                {
-                    continue;
-                }
-                else
-                {
-                    //if neighbour is within bounds
-                    int checkX = n.posI + x;
-                    int checkY = n.posJ;
-                    //If the Neighbour is within the bounds of the grid add it to the list
-                    if (checkX > -1 && checkX < nodes.GetLength(0) && checkY > -1 && checkY < nodes.GetLength(1))
-                    {
-                        neighbours.Add(RetrieveNode(checkX, checkY));
-                    }
-                }
-            }
-            for (int y = -1; y <= 1; y++)
-            {
-                if (y == 0)
-                {
-                    continue;
-                }
-                else
-                {
-                    int checkX = n.posI;
-                    int checkY = n.posJ + y;
-                    //If the Neighbour is within the bounds of the grid add it to the list
-                    if (checkX > -1 && checkX < nodes.GetLength(0) && checkY > -1 && checkY < nodes.GetLength(1))
-                    {
-                        neighbours.Add(RetrieveNode(checkX, checkY));
-                    }
-                }
-            }
-            return neighbours;
-        }
         public void FindNodes()
         {
-            foreach (Node n in nodes)
+            foreach (Node n in onePassNodes)
             {
                 if (n.nodeType == "Walkable")
                 {
@@ -136,11 +97,6 @@ namespace AstarAlgorithm
                     goalNode = n;
                 }
             }
-        }
-        //Used to retrieve node from the grid
-        public Node RetrieveNode(int posX, int posY)
-        {
-            return nodes[posX, posY];
         }
         //Modified Non-Diagonal cost calculation
         public int ModifiedManhattanDistance(Node current, Node target)
@@ -157,22 +113,6 @@ namespace AstarAlgorithm
                 return (14 * distanceX + 10 * (distanceY - distanceX));
             }
         }
-        //Modified Non-Diagonal cost calculation
-        public int ManhattanDistance(Node current, Node target)
-        {
-            int distanceX = Math.Abs(current.posI - target.posI);
-            int distanceY = Math.Abs(current.posJ - target.posJ);
-            return 10 * (distanceX + distanceY);
-        }
-        //Diagonal cost calculation
-        public int DiagonalManhattanDistance(Node current, Node target)
-        {
-            int movementCost = 10;
-            int diagonalMovementCost = 14;
-            int distanceX = Math.Abs(current.posI - target.posI);
-            int distanceY = Math.Abs(current.posJ = target.posJ);
-            return (movementCost * (distanceX + distanceY) + (diagonalMovementCost - 2 * movementCost) * Math.Min(distanceX, distanceY));
-        }
         //Creates a list linking each step took to reach the goal 
         public List<Node> path;
         void CreatePath(Node start, Node end)
@@ -188,3 +128,4 @@ namespace AstarAlgorithm
         }
     }
 }
+

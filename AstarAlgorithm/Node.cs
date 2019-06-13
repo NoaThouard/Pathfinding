@@ -17,15 +17,17 @@ namespace AstarAlgorithm
                 return gCost + hCost;
             }
         }
-        public int posX, posY;
+        public int posI, posJ;
         public Node parent;
         //Constructor - when called "new Node()"
-        public Node(string _nodeType, int _posX, int _posY)
+        public Node(string _nodeType, int _posI, int _posJ)
         {
             nodeType = _nodeType;
-            posX = _posX;
-            posY = _posY;
+            posI = _posI;
+            posJ = _posJ;
         }
 
+       //NESW aka top, right, down
+       public Node[] neighbours = { null,null,null,null }; 
     }
 }

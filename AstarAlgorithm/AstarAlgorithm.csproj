@@ -43,9 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graph.cs" />
     <Compile Include="GridSquare.cs" />
+    <Compile Include="IGraph.cs" />
     <Compile Include="Maze.cs" />
     <Compile Include="Node.cs" />
+    <Compile Include="OnePass.cs" />
+    <Compile Include="OnePassPathFinding.cs" />
     <Compile Include="PathFinding.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
