@@ -145,8 +145,8 @@ namespace AstarAlgorithm
         //Modified Non-Diagonal cost calculation
         public int ModifiedManhattanDistance(Node current, Node target)
         {
-            int distanceX = Math.Abs(current.posI - current.posI);
-            int distanceY = Math.Abs(current.posJ - current.posJ);
+            int distanceX = Math.Abs(current.posI - target.posI);
+            int distanceY = Math.Abs(current.posJ - target.posJ);
 
             if (distanceX > distanceY)
             {

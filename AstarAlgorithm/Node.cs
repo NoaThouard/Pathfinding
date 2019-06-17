@@ -27,7 +27,7 @@ namespace AstarAlgorithm
             posJ = _posJ;
         }
 
-       //NESW aka top, right, down
+       //NESW aka top, right, down - used to store connections for one pass
        public Node[] neighbours = { null,null,null,null }; 
     }
 }

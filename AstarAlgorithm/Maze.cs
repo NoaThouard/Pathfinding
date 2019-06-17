@@ -19,6 +19,10 @@ namespace AstarAlgorithm
             grid = new GridSquare[row, col];
 
         }
+        public void SetSize(GridSquare[,] _grid)
+        {
+            grid = _grid;
+        }
         //GenerateMaze() called when there isn't a existing grid
         public void GenerateGrid()
         {
@@ -100,6 +104,7 @@ namespace AstarAlgorithm
                 gCount++;
             }
         }
+        //Used to draw a path in the console
         public void VisualisePath(List<Node> path)
         {
             if (path == null)

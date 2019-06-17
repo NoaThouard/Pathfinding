@@ -29,7 +29,7 @@ namespace AstarAlgorithm
                             {
                                 Node tempNode = new Node(grid[i, j].type, i, j);
                                 nodes.Add(tempNode);
-                                grid[i, j] = new GridSquare(ConsoleColor.White, "Walkable");
+                                grid[i, j] = new GridSquare(ConsoleColor.Gray, "Walkable");
                             }
                             else { continue; }
                         }
@@ -137,9 +137,10 @@ namespace AstarAlgorithm
 
             else { Console.WriteLine("New Combination" + oCount + " " + wCount); return true; }
         }
+        //Call method to run the connection method foreach node
         public void RunConnections()
-        { foreach(Node n in nodes) { GetConnection(n); }
-        }
+        { foreach(Node n in nodes) { GetConnection(n); }}
+        //Search left and above for each node connecting the nodes.
         public void GetConnection(Node n)
         {
             int iterator = 1;
