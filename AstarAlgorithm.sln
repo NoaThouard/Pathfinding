@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.438
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstarAlgorithm", "AstarAlgorithm\AstarAlgorithm.csproj", "{D00EDFC0-E9EA-4BC8-B44D-4748598DA917}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding_OnePassAlgorithm", "AstarAlgorithm\Pathfinding_OnePassAlgorithm.csproj", "{D00EDFC0-E9EA-4BC8-B44D-4748598DA917}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{92128F7B-495C-4EA2-A434-562ACCD3E365}"
 	ProjectSection(SolutionItems) = preProject
@@ -39,6 +39,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7054B9B-7E22-414D-9B88-7497577A4D4D}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
