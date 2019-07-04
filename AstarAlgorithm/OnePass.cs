@@ -59,7 +59,7 @@ namespace AstarAlgorithm
                 if (x == 0) { continue; } //if the checking itself, or if checking outside of bounds skip
                 else
                 {
-                    if (grid[i, j + x].type == "Obstacle" || j + x < 0 || j + x > grid.GetLength(1))
+                    if (j + x < 0 || j + x >= grid.GetLength(1) || grid[i, j + x].type == "Obstacle")
                     {
                         oCount += 1;
                         //Mark West neighbour as a obstacle
@@ -84,7 +84,7 @@ namespace AstarAlgorithm
                 if (y == 0) { continue; } //if the checking itself, or if checking outside of bounds skip
                 else
                 {
-                    if (grid[i + y, j].type == "Obstacle" || i + y < 0 || i + y > grid.GetLength(0))
+                    if (string.Compare (grid[i + y, j].type, "Obstacle", true) == 0 || i + y < 0 || i + y > grid.GetLength(0))
                     {
                         oCount += 1;
                         //Mark North neighbour as a obstacle
@@ -149,7 +149,7 @@ namespace AstarAlgorithm
                 if (n.neighbours[0] == null) //no North/above neighbour
                 {
                     if (n.posI - iterator < 0) { break; }
-                    else if (grid[n.posI - iterator, n.posJ].type != "Obstacle") //if the checked postion is within bounds and is not an obstacle
+                    else if (string.Compare(grid[n.posI - iterator, n.posJ].type, "Obstacle") != 0)//if the checked postion is within bounds and is not an obstacle
                     {
                         if (nodes.Find(x => x.posI == (n.posI - iterator) && x.posJ == n.posJ) != null) //if there is a node at the checked position
                         {

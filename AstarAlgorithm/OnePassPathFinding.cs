@@ -42,7 +42,8 @@ namespace AstarAlgorithm
                 //Scan other nodes in openSet comparing it to current node, if another node has a lower fcost or equal fcost (but lower hCost) switch to that node as it's closer to the goal
                 for (int i = 1 /*= 1 because current node is 0 and this is checking all nodes besides current node*/; i < openSet.Count; i++)
                 {
-                    ////Uncomment for dijkstra
+                    //Uncomment for dijkstra
+                    ////if (currentNode.gCost > openSet[i].gCost || currentNode.gCost == openSet[i].gCost)
                     //if (currentNode.gCost > openSet[i].gCost || currentNode.gCost == openSet[i].gCost)
 
                     ////Uncomment for greedy best-first seach
@@ -52,7 +53,7 @@ namespace AstarAlgorithm
                     if (currentNode.fCost > openSet[i].fCost || currentNode.fCost == openSet[i].fCost && currentNode.hCost > openSet[i].hCost)
                     {
                         currentNode = openSet[i];
-                    }
+                         }
                 }
 
                 //Remove current node from openset as it's beening checked and isn't waiting to be checked
@@ -65,7 +66,6 @@ namespace AstarAlgorithm
                     CreatePath(startingNode, goalNode);
                     return;
                 }
-
                 //Check all neighbours of the current node
                 foreach (Node neighbour in currentNode.neighbours)
                 {
@@ -75,10 +75,10 @@ namespace AstarAlgorithm
                         continue;
                     }
                     //calculate costs
-                    int movementCost = currentNode.gCost + ManhattanDistance(currentNode, neighbour);
+                    int movementCost = currentNode.gCost + ManhattanDistance( neighbour, currentNode);
                     if (movementCost < neighbour.gCost || !openSet.Contains(neighbour))
                     {
-                        neighbour.gCost = movementCost;
+                        neighbour.gCost = movementCost;                    
                         neighbour.hCost = ManhattanDistance(neighbour, goalNode);
                         neighbour.parent = currentNode;
                         openSet.Add(neighbour);
@@ -123,6 +123,11 @@ namespace AstarAlgorithm
         //Non-Diagonal cost calculation
         public int ManhattanDistance(Node current, Node target)
         {
+            //if (current.posI == 31 && current.posJ == 10)
+            //{
+            //    return 0;
+            //}
+
             int distanceX = Math.Abs(current.posI - target.posI);
             int distanceY = Math.Abs(current.posJ - target.posJ);
             return 10 * (distanceX + distanceY);

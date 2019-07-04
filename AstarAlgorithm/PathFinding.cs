@@ -41,8 +41,15 @@ namespace AstarAlgorithm
                 //Scan other nodes in openSet comparing it to current node, if another node has a lower fcost or equal fcost (but lower hCost) switch to that node as it's closer to the goal
                 for (int i = 1 /*= 1 because current node is 0 and this is checking all nodes besides current node*/; i < openSet.Count; i++)
                 {
+                    ////Uncomment for dijkstra
+                    //if (currentNode.gCost > openSet[i].gCost || currentNode.gCost == openSet[i].gCost)
+
+                    ////Uncomment for greedy best-first seach
+                    //if (currentNode.hCost > openSet[i].hCost || currentNode.hCost == openSet[i].hCost)
+
+                    //Uncomment for A* search algorthm
                     if (currentNode.fCost > openSet[i].fCost || currentNode.fCost == openSet[i].fCost && currentNode.hCost > openSet[i].hCost)
-                    {
+                        {
                         currentNode = openSet[i];
                     }
                 }
@@ -160,9 +167,10 @@ namespace AstarAlgorithm
         //Modified Non-Diagonal cost calculation
         public int ManhattanDistance(Node current, Node target)
         {
+            int movementCost = 10;
             int distanceX = Math.Abs(current.posI - target.posI);
             int distanceY = Math.Abs(current.posJ - target.posJ);
-            return 10 * (distanceX + distanceY);
+            return movementCost * (distanceX + distanceY);
         }
         //Diagonal cost calculation
         public int DiagonalManhattanDistance(Node current, Node target)
@@ -173,6 +181,7 @@ namespace AstarAlgorithm
             int distanceY = Math.Abs(current.posJ = target.posJ);
             return (movementCost * (distanceX + distanceY) + (diagonalMovementCost - 2 * movementCost) * Math.Min(distanceX, distanceY));
         }
+
         //Creates a list linking each step took to reach the goal 
         public List<Node> path;
         void CreatePath(Node start, Node end)
